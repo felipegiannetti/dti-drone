@@ -1,0 +1,3 @@
+com\example\backend\BackendApplication.class
+com\example\backend\domain\Drone$Status.class
+com\example\backend\domain\Drone.class
