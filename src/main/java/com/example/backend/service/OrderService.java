@@ -19,15 +19,19 @@ public class OrderService {
 
     @Transactional
     public Order create(Order order) {
-        validate(order);
         order.setId(null);
 
+        if (order.getWeightKg() <= 0) {
+            order.setWeightKg(1.0);
+        }
+        
         if (order.getPriority() == null) {
             order.setPriority(Order.Priority.LOW);
         }
         
         order.setStatus(Order.Status.PENDING);
 
+        validate(order);
         return orderRepo.save(order);
     }
 
