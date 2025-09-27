@@ -1,0 +1,46 @@
+# Ignorar arquivos desnecessários no contexto Docker
+target/
+.git/
+.gitignore
+.vscode/
+*.md
+README.md
+
+# Ops files (não são necessários na imagem)
+ops/.env
+ops/docker-compose.yml
+ops/setup-dev.sh
+
+# Node modules (frontend)
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+*.log
+logs/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/

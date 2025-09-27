@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-OPS_DIR="$ROOT_DIR/drone-sim-environment-next/ops"
+OPS_DIR="$ROOT_DIR/ops"
 
 echo "==> Configurando ambiente de desenvolvimento do Drone Simulator"
 
