@@ -1,0 +1,1 @@
+# Simulador de Encomendas em Drone — Ambiente (Spring Boot + Next.js)
