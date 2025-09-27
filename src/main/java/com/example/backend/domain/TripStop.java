@@ -52,4 +52,9 @@ public class TripStop {
 
     @Column(nullable = false)
     private boolean delivered = false;
+    
+    // Método temporário devido a problema com Lombok + JsonIgnore
+    public void setTrip(Trip trip) {
+        this.trip = trip;
+    }
 }
