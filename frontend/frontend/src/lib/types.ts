@@ -34,6 +34,7 @@ export interface Trip {
     startAt?: string;
     finishAt?: string | null;
     status: TripStatus;
+    stops?: TripStop[];
 }
 
 export interface TripStop {
