@@ -1,13 +1,1 @@
-com\example\backend\domain\Order.class
-com\example\backend\domain\TripStop.class
-com\example\backend\repository\OrderRepository.class
-com\example\backend\domain\Trip.class
-com\example\backend\domain\Order$Priority.class
-com\example\backend\domain\Trip$Status.class
-com\example\backend\repository\DroneRepository.class
 com\example\backend\BackendApplication.class
-com\example\backend\domain\Order$Status.class
-com\example\backend\domain\Drone.class
-com\example\backend\repository\TripStopRepository.class
-com\example\backend\domain\Drone$Status.class
-com\example\backend\repository\TripRepository.class

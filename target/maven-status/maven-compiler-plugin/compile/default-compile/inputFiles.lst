@@ -1,4 +1,9 @@
 C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\BackendApplication.java
+C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\controller\DroneController.java
+C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\controller\OrderController.java
+C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\controller\PlanController.java
+C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\controller\TripController.java
+C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\controller\TripStopController.java
 C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\domain\Drone.java
 C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\domain\Order.java
 C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\domain\Trip.java
@@ -7,3 +12,8 @@ C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\
 C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\repository\OrderRepository.java
 C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\repository\TripRepository.java
 C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\repository\TripStopRepository.java
+C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\service\DroneService.java
+C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\service\OrderService.java
+C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\service\PlanningService.java
+C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\service\TripService.java
+C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\service\TripStopService.java
