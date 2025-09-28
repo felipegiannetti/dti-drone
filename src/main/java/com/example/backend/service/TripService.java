@@ -51,12 +51,7 @@ public class TripService {
             t.setStatus(Trip.Status.PLANNED);
         }
 
-        // Calcula automaticamente o tempo de finalização baseado na distância e velocidade
-        if (t.getFinishAt() == null && t.getTotalDistanceKm() > 0 && drone.getSpeedKmh() > 0) {
-            double durationHours = t.getTotalDistanceKm() / drone.getSpeedKmh();
-            long durationSeconds = (long) (durationHours * 3600);
-            t.setFinishAt(t.getStartAt().plusSeconds(durationSeconds));
-        }
+        t.setFinishAt(null);
 
         validate(t);
 

@@ -6,6 +6,7 @@ import com.example.backend.domain.TripStop;
 import com.example.backend.repository.OrderRepository;
 import com.example.backend.repository.TripRepository;
 import com.example.backend.repository.TripStopRepository;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,11 +20,13 @@ public class TripStopService {
     private final TripRepository tripRepo;
     private final TripStopRepository stopRepo;
     private final OrderRepository orderRepo;
+    private final EntityManager entityManager;
 
-    public TripStopService(TripRepository tripRepo, TripStopRepository stopRepo, OrderRepository orderRepo) {
+    public TripStopService(TripRepository tripRepo, TripStopRepository stopRepo, OrderRepository orderRepo, EntityManager entityManager) {
         this.tripRepo = tripRepo;
         this.stopRepo = stopRepo;
         this.orderRepo = orderRepo;
+        this.entityManager = entityManager;
     }
 
     @Transactional(readOnly = true)
@@ -97,18 +100,19 @@ public class TripStopService {
 
         TripStop moving = getByTripAndSeq(tripId, fromSeq);
 
+        for (int i = 0; i < stops.size(); i++) {
+            stops.get(i).setSeq(-(i + 1));
+            stopRepo.save(stops.get(i));
+        }
+        
+        entityManager.flush();
+
         stops.removeIf(s -> s.getId().equals(moving.getId()));
         stops.add(toSeq - 1, moving);
 
-        int seq = 1;
-        for (TripStop ts : stops) {
-
-            if (ts.getSeq() != seq) {
-                ts.setSeq(seq);
-                stopRepo.save(ts);
-            }
-
-            seq++;
+        for (int i = 0; i < stops.size(); i++) {
+            stops.get(i).setSeq(i + 1);
+            stopRepo.save(stops.get(i));
         }
     }
 

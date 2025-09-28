@@ -8,6 +8,7 @@ C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\
 C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\domain\Order.java
 C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\domain\Trip.java
 C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\domain\TripStop.java
+C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\exception\GlobalExceptionHandler.java
 C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\repository\DroneRepository.java
 C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\repository\OrderRepository.java
 C:\Users\felip\OneDrive\Desktop\dti\dti-drone\src\main\java\com\example\backend\repository\TripRepository.java

@@ -22,20 +22,10 @@ public class DroneService {
         
         d.setId(null);
         
+        validate(d);
+        
         if (d.getName() == null || d.getName().isBlank()) {
             d.setName("Drone-" + System.currentTimeMillis());
-        }
-
-        if (d.getCapacityKg() <= 0) {
-            d.setCapacityKg(5.0);
-        }
-
-        if (d.getRangeKm() <= 0) {
-            d.setRangeKm(10.0);
-        }
-
-        if (d.getSpeedKmh() <= 0) {
-            d.setSpeedKmh(30.0);
         }
         
         if (d.getStatus() == null) {
@@ -46,7 +36,6 @@ public class DroneService {
             d.setBatteryPct(100);
         }
 
-        validate(d);
         return droneRepo.save(d);
     }
 
@@ -134,6 +123,10 @@ public class DroneService {
 
         if (d.getSpeedKmh() <= 0) {
             throw new IllegalArgumentException("speedKmh must be > 0");
+        }
+        
+        if (d.getBatteryPct() < 0 || d.getBatteryPct() > 100) {
+            throw new IllegalArgumentException("batteryPct must be between 0 and 100");
         }
     }
 }

@@ -127,6 +127,11 @@ public class GlobalExceptionHandler {
         return build(HttpStatus.BAD_REQUEST, "Bad Request", ex.getMessage(), req, null);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException ex, HttpServletRequest req) {
+        return build(HttpStatus.BAD_REQUEST, "Bad Request", ex.getMessage(), req, null);
+    }
+
     @ExceptionHandler({ IllegalStateException.class, DataIntegrityViolationException.class, OptimisticLockingFailureException.class })
     public ResponseEntity<ErrorResponse> handleConflict(Exception ex, HttpServletRequest req) {
         return build(HttpStatus.CONFLICT, "Conflict", ex.getMessage(), req, null);
@@ -136,6 +141,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleTx(TransactionSystemException ex, HttpServletRequest req) {
         return build(HttpStatus.CONFLICT, "Transaction Error", rootMessage(ex), req, null);
     }
+    
     @ExceptionHandler({ HttpMessageNotWritableException.class, DataAccessException.class })
     public ResponseEntity<ErrorResponse> handleServerIssues(Exception ex, HttpServletRequest req) {
         return build(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Error", rootMessage(ex), req, null);
