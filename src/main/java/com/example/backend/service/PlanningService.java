@@ -34,16 +34,10 @@ public class PlanningService {
         this.stopRepo = stopRepo;
     }
 
-    /**
-     * Planeja viagens para todos os drones disponíveis a partir dos pedidos com status PENDING.
-     * Regras:
-     *  - respeita capacidade (kg) do drone por viagem
-     *  - respeita alcance (km) ida + rota + volta
-     *  - prioriza pedidos: HIGH > MEDIUM > LOW (desempate: mais perto do hub primeiro)
-     */
     @Transactional
     public List<Trip> planAll() {
         List<Order> pending = new ArrayList<>(orderRepo.findByStatus(Order.Status.PENDING));
+        
         pending.sort(Comparator
                 .comparing(Order::getPriority, Comparator.comparingInt(this::priorityRank))
                 .thenComparing(o -> distance(HUB_ORIGEM_X, HUB_ORIGEM_Y, o.getCustomerX(), o.getCustomerY())));
@@ -56,18 +50,21 @@ public class PlanningService {
         for (Drone drone : drones) {
             while (true) {
                 List<Order> pack = pickByKnapsack(pending, drone.getCapacityKg());
-                if (pack.isEmpty()) break;
+                if (pack.isEmpty()) {
+                    break;
+                }
 
                 List<Order> delivery = sequenceByNearestNeighbor(pack);
 
                 double dist = totalPathDistance(delivery);
+                
                 while (dist > drone.getRangeKm() && !delivery.isEmpty()) {
-                    delivery.remove(delivery.size() - 1);
                     dist = totalPathDistance(delivery);
                 }
-                    if (delivery.isEmpty()) {
-                        break;
-                    }
+                
+                if (delivery.isEmpty()) {
+                    break;
+                }
 
                 Trip trip = new Trip();
                 trip.setDrone(drone);
@@ -77,7 +74,6 @@ public class PlanningService {
                 trip.setStatus(Trip.Status.PLANNED);
                 trip = tripRepo.save(trip);
 
-                // estimativas de tempo com base na velocidade do drone
                 double speedKmh = Math.max(1.0, drone.getSpeedKmh());
                 Instant cursor = trip.getStartAt();
                 int cx = HUB_ORIGEM_X, cy = HUB_ORIGEM_Y;
@@ -128,7 +124,6 @@ public class PlanningService {
         };
     }
 
-    // distância utilizando o metodo de Manhattan
     private static double distance(int x1, int y1, int x2, int y2) {
         return Math.abs(x1 - x2) + Math.abs(y1 - y2);
     }
@@ -149,17 +144,12 @@ public class PlanningService {
         return distance;
     }
 
-    /**
-     * Seleção "knapsack" por prioridade e peso:
-     *  - HIGH primeiro, depois MEDIUM, depois LOW
-     *  - dentro da mesma prioridade, tenta encaixar pesos maiores primeiro
-     */
-    private List<Order> pickByKnapsack(List<Order> pool, double capacityKg) { // pending, drone.getCapacityKg()
+    private List<Order> pickByKnapsack(List<Order> pool, double capacityKg) {
         if (pool.isEmpty()) return List.of();
         List<Order> sorted = pool.stream()
                 .sorted(Comparator
                         .comparing(Order::getPriority, Comparator.comparingInt(this::priorityRank))
-                        .thenComparing((Order o) -> -o.getWeightKg())) // - para deixar maior primeiro
+                        .thenComparing((Order o) -> -o.getWeightKg()))
                 .collect(Collectors.toList());
 
         List<Order> chosen = new ArrayList<>();
@@ -173,25 +163,34 @@ public class PlanningService {
         return chosen;
     }
 
-    // vizinho mais próximo a partir do hub
-    private static List<Order> sequenceByNearestNeighbor(List<Order> orders) {
+    private List<Order> sequenceByNearestNeighbor(List<Order> orders) {
         if (orders.isEmpty()) return List.of();
         
-        List<Order> remaining = new ArrayList<>(orders);
-        List<Order> route = new ArrayList<>(orders.size());
-
+        Map<Order.Priority, List<Order>> byPriority = orders.stream()
+            .collect(Collectors.groupingBy(Order::getPriority));
+        
+        List<Order> route = new ArrayList<>();
         final int[] currentPos = {HUB_ORIGEM_X, HUB_ORIGEM_Y};
         
-        while (!remaining.isEmpty()) {
-            Order nearest = remaining.stream()
-                    .min(Comparator.comparingDouble(o -> distance(currentPos[0], currentPos[1], o.getCustomerX(), o.getCustomerY())))
-                    .orElseThrow(() -> new IllegalStateException("Unexpected empty list"));
+        for (Order.Priority priority : List.of(Order.Priority.HIGH, Order.Priority.MEDIUM, Order.Priority.LOW)) {
+            List<Order> priorityGroup = byPriority.getOrDefault(priority, List.of());
+            if (priorityGroup.isEmpty()) continue;
+            
+            List<Order> remaining = new ArrayList<>(priorityGroup);
+            
+            while (!remaining.isEmpty()) {
+                Order nearest = remaining.stream()
+                        .min(Comparator.comparingDouble(o -> distance(currentPos[0], currentPos[1], o.getCustomerX(), o.getCustomerY())))
+                        .orElseThrow(() -> new IllegalStateException("Unexpected empty list"));
 
-            route.add(nearest);
-            currentPos[0] = nearest.getCustomerX();
-            currentPos[1] = nearest.getCustomerY();
-            remaining.remove(nearest);
+                route.add(nearest);
+                
+                currentPos[0] = nearest.getCustomerX();
+                currentPos[1] = nearest.getCustomerY();
+                remaining.remove(nearest);
+            }
         }
+        
         return route;
     }
 }
