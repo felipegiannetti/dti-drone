@@ -332,7 +332,7 @@ mvn test
 - **Códigos HTTP**: 200, 201, 400, 404, 409 conforme regras
 
 
-> **📝 Nota**: Os testes usam um banco H2 em memória, então não afetam seus dados do PostgreSQL de desenvolvimento.
+> **Nota**: Os testes usam um banco H2 em memória, então não afetam seus dados do PostgreSQL de desenvolvimento.
 
 
 ## Como utilizei IA no desenvolvimento
