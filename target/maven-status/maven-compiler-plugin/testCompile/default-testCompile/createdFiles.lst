@@ -2,4 +2,3 @@ com\example\backend\service\OrderServiceTest.class
 com\example\backend\service\TripServiceTest.class
 com\example\backend\service\TripStopServiceTest.class
 com\example\backend\service\DroneServiceTest.class
-com\example\backend\service\PlanningServiceTest.class

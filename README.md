@@ -289,6 +289,50 @@ VALUES (5, 8, 2.5, 'HIGH', 'PENDING'), (12, 15, 4.0, 'MEDIUM', 'PENDING');
 ### Acessos
 
 - **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:8080
+- **PostgreSQL**: localhost:5432 (usuário: `app`, senha: `app`, database: `drones`)
+
+## Executando Testes
+
+O projeto possui uma suíte completa de testes automatizados cobrindo controllers e services.
+
+### Estrutura de Testes
+
+```
+src/test/java/com/example/backend/
+├── controller/                    # Testes de integração dos controllers
+│   ├── DroneControllerTest.java       # Testes CRUD de drones
+│   ├── OrderControllerTest.java       # Testes CRUD de pedidos
+│   ├── TripControllerTest.java        # Testes CRUD de viagens
+│   ├── TripStopControllerTest.java    # Testes CRUD de paradas
+│   └── PlanControllerTest.java        # Testes do algoritmo via API
+└── service/                       # Testes unitários dos services
+    ├── DroneServiceTest.java          # Testes lógica de drones
+    ├── OrderServiceTest.java          # Testes lógica de pedidos
+    ├── TripServiceTest.java           # Testes lógica de viagens
+    └── TripStopServiceTest.java       # Testes lógica de paradas
+```
+
+### Comandos de Teste
+
+```bash
+# Executar todos os testes
+mvn test
+
+### Principais Cenários Testados
+
+#### **Service Tests (Testes Unitários)**
+- **DroneServiceTest**: CRUD, validações de status, localização
+- **OrderServiceTest**: CRUD, validações de prioridade, peso
+- **TripServiceTest**: Criação de viagens, validações de capacidade
+- **TripStopServiceTest**: Sequenciamento, marcação de entregas
+
+#### **Controller Tests (Testes de Integração)**
+- **API Endpoints**: Todos os endpoints testados
+- **Códigos HTTP**: 200, 201, 400, 404, 409 conforme regras
+
+
+> **📝 Nota**: Os testes usam um banco H2 em memória, então não afetam seus dados do PostgreSQL de desenvolvimento.
 
 
 ## Como utilizei IA no desenvolvimento
