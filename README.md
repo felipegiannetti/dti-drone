@@ -290,7 +290,7 @@ VALUES (5, 8, 2.5, 'HIGH', 'PENDING'), (12, 15, 4.0, 'MEDIUM', 'PENDING');
 
 - **Frontend**: http://localhost:3000
 - **Backend API**: http://localhost:8080
-- **PostgreSQL**: localhost:5432 (usuário: `app`, senha: `app`, database: `drones`)
+
 
 ## Executando Testes
 
